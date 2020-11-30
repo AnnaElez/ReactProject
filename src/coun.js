@@ -8,6 +8,7 @@ class Decrease extends Component {
 
         this.handleClickIncrease = this.handleClickIncrease.bind(this)
         this.handleClickDec = this.handleClickDec.bind(this)
+        this.handleClickRes = this.handleClickRes.bind(this)
     }
 
     state = {
@@ -21,8 +22,25 @@ class Decrease extends Component {
     }
     handleClickDec() {
 
+        if(this.state.count<=0){
+            this.setState({
+                count:this.state.count,
+                })
+        }
+        
+        else{
+            this.setState({
+                count: this.state.count - 1,
+            })
+        }
+
+
+    }
+
+    handleClickRes() {
+
         this.setState({
-            count: this.state.count - 1
+            count: 0,
         })
 
     }
@@ -34,6 +52,7 @@ class Decrease extends Component {
             <div className={c.back}>
                 <div className={c.info}>
                     <p className={c.infos}>{this.state.count}</p>
+                    <button onClick={this.handleClickRes}>Click to reset count </button>
                     <button onClick={this.handleClickDec}>Click to decrease </button>
                     <button onClick={this.handleClickIncrease}>Click to increase </button>
                 </div>

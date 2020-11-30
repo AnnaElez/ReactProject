@@ -1,7 +1,7 @@
 import './App.css';
-// import Increase from './counter.js';
 import Decrease from './coun.js';
 // import ToDo from './Demo.js';
+// import List from './list.js';
 
 
 // function App() {
@@ -19,12 +19,24 @@ import Decrease from './coun.js';
       return (
         <>
         <div className="App">
-          {/* <Increase /> */}
           <Decrease />
         </div>
         </>
         );
     }
+
+    // function App() {
+
+    //   const color = ['orange', 'green', 'orange', 'red']
+    //   return (
+    //     <>
+    //     <div className="App">
+    //         <List color = {color}/>
+    //     </div>
+    //     </>
+    //     );
+    // }
+
 
 
 export default App;
