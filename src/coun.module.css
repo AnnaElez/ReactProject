@@ -1,0 +1,23 @@
+.back{
+  width: 500px;
+  height: 300px;
+  background-color: black;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto 
+}
+
+.info{
+  position: relative;
+  top: 90px;
+}
+
+.infos{
+ color: white;
+ font-size: 20px;
+}
+
+button{
+  margin-left: 20px ;
+  margin-right: 20px ;
+}

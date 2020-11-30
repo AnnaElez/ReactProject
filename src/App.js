@@ -1,54 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
-import Animals from './classes.jsx'
+// import Increase from './counter.js';
+import Decrease from './coun.js';
+// import ToDo from './Demo.js';
 
-export function Surname(props) {
-  // console.log(props)
-  return(
-    <>
-    <p>
-      {props.propsObj.lastName}
-    </p>
-    <p>
-      {props.propsObj.age}
-    </p>
-    </>
-  )
-}
 
-export function Name(props) {
-  return(
-    <>
-      <img src = {props.logo}/>
-    </>
-  )
- 
-}
+// function App() {
+//   return (
+//     <div>
+//       <div className="App">
+//         {/* <ToDo /> */}
+//       </div>
+//     </div>
+//   );
+// }
 
-function App() {
-  
-  const Greeting = "Hello";
 
-  let obj = {
-    lastName: "Elez",
-    age: "18"
-  }
-  
-  return (
-    <>
-    <div className="App">
-      {Greeting}
-      <Name/>
-      <Surname propsObj = {obj}/>
-    </div>
+    function App() {
+      return (
+        <>
+        <div className="App">
+          {/* <Increase /> */}
+          <Decrease />
+        </div>
+        </>
+        );
+    }
 
-    <div className="App">
-    <Animals type = 'cat' name = "Karen" color = "white" />
-    <Animals type = 'monkey' name = "Tim" color = "brown" />
-    <Animals type = 'hamster' name = "Vilyam" color = "orange" />
-    </div>
-    </>
-  );
-}
 
 export default App;
