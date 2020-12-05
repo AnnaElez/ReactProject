@@ -1,41 +1,18 @@
 import './App.css';
-import Decrease from './coun.js';
-// import ToDo from './Demo.js';
-// import List from './list.js';
+import ToDo from './Demo.js';
 
 
-// function App() {
-//   return (
-//     <div>
-//       <div className="App">
-//         {/* <ToDo /> */}
-//       </div>
-//     </div>
-//   );
-// }
 
-
-    function App() {
-      return (
-        <>
-        <div className="App">
-          <Decrease />
-        </div>
-        </>
-        );
-    }
-
-    // function App() {
-
-    //   const color = ['orange', 'green', 'orange', 'red']
-    //   return (
-    //     <>
-    //     <div className="App">
-    //         <List color = {color}/>
-    //     </div>
-    //     </>
-    //     );
-    // }
+function App() {
+  return (
+    <div>
+      <div className="App">
+        <ToDo placeholder = 'Add new task for today' day = 'today'/>
+        <ToDo placeholder = 'Add new task for tomorrow' day = 'tomorrow'/>
+      </div>
+    </div>
+  );
+}
 
 
 
