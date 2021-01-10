@@ -8,29 +8,31 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 class CardTask extends Component {
 
     state = {
-        checked:false
-
+        checked: false,
     }
 
 
-    handleCheck=()=>{
+    handleCheck = () => {
         this.setState({
 
-            checked:!this.state.checked
+            checked: !this.state.checked
         })
 
-        const {onCheck,data}=this.props
+        const { onCheck, data } = this.props
 
         onCheck(data._id)
     }
 
     render(props) {
 
-        const task = this.props.data
-        const {checked} = this.state
+        const task = this.props.data;
+        const { checked } = this.state;
+        const { disabled } = this.props;
+
+       
 
         return (
-            <Card className = {checked ? 'task':''}>
+            <Card className={checked ? 'task' : ''}>
                 <Card.Img variant="top" src="holder.js/100px180" />
                 <Card.Body>
                     <input
@@ -50,7 +52,14 @@ class CardTask extends Component {
                     <Button
                         variant="danger"
                         onClick={() => this.props.onRemove(task._id)}
+                        disabled={disabled}
                     >Delete</Button>
+
+                    <Button
+                        variant="primary"
+                        onClick= {() => this.props.onEdit(task)}
+                        disabled={disabled}
+                    >Edit</Button>
                 </Card.Body>
             </Card>
         )
