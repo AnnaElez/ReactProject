@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './Card.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {formatDate} from "./utils.js";
 
 
 
@@ -46,7 +47,15 @@ class CardTask extends Component {
                     </Card.Title>
 
                     <Card.Text>
-                        {task.description}
+                        Description:{task.description}
+                    </Card.Text>
+
+                    <Card.Text>
+                        Date:{formatDate(task.date)}
+                    </Card.Text>
+
+                    <Card.Text>
+                        Created At:{formatDate(task.created_at)}
                     </Card.Text>
 
                     <Button

@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import c from './Demo.module.css';
-import { Button, Modal } from 'react-bootstrap';
-// import { InputGroup, Button, FormControl } from 'react-bootstrap';
-
+import { Button, Modal, FormControl } from 'react-bootstrap';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {formatDate} from "./utils.js";
 
 
 
@@ -12,8 +13,10 @@ import { Button, Modal } from 'react-bootstrap';
 class AddTask extends Component {
 
     state = {
-        inputValue: '',
-        toggle: false
+        toggle: false,
+        title: '',
+        description: '',
+        date:new Date()
     }
 
 
@@ -22,29 +25,25 @@ class AddTask extends Component {
 
 
 
-        const { inputValue } = this.state;
+        const { title, description,date } = this.state;
 
-        if (!inputValue) {
+        if (!title) {
             return
         }
 
-        const task ={
-            title: inputValue
+        const task = {
+            title,
+            description,
+            // date:date.toISOString().slice(0,10)
+            date:formatDate(date.toISOString())
         }
         this.props.onAdd(task)
-
-        this.setState({
-            inputValue: ''
-        });
-
-        console.log(task)
-        this.toggleAddModal()
     }
-    
 
-    handleChange = (event) => {
+
+    handleChange = (event, type) => {
         this.setState({
-            inputValue: event.target.value
+            [type]: event.target.value
         })
     }
 
@@ -57,72 +56,79 @@ class AddTask extends Component {
 
     }
 
-    toggleAddModal = () =>{
+    toggleAddModal = () => {
         this.setState({
             toggle: !this.state.toggle
         })
-         
+
+    }
+
+    handleDateChange=(date)=>{
+        this.setState({
+            date
+        })
     }
 
 
     render() {
 
-        const { inputValue,toggle} = this.state
-        const { disabled } = this.props 
+        const { title, description, toggle, date } = this.state
+        const { disabled, onClose } = this.props
+        const Example = () => {
+            const [startDate, setStartDate] = useState(new Date());
+        };
 
         return (
             <>
-             <Button
-                variant="outline-secondary"
-                type="button" value="Add"
-                onClick={this.toggleAddModal} >Add</Button>
+                <Modal
+                    show={true}
+                    onHide={() => console.log('shf')}
+                    centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Task</Modal.Title>
+                    </Modal.Header>
 
-            {toggle &&
+                    <Modal.Body>
+                        <FormControl type="text"
+                            placeholder={this.props.placeholder}
+                            onChange={(event) => this.handleChange(event, 'title')}
+                            aria-describedby="basic-addon1"
+                            onKeyDown={(event) => this.handleKeyDown(event)}
+                            disabled={disabled}
+                        />
+                        <textarea
+                            className={c.description}
+                            onChange={(event) => this.handleChange(event, 'description')}
+                            rows='5' />
 
-            <Modal show={true} onHide={this.toggleAddModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add Task</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <input className='input'
-                        type='text'
-                        placeholder = 'Add new task'
-                        value={inputValue}
-                        onChange={this.handleChange}
-                        disabled = {disabled} />
-                </Modal.Body>
-                <Modal.Footer>
+                        <DatePicker
+                            selected={date}
+                            onChange={(date)=>this.handleDateChange(date)} />
+                    </Modal.Body>
 
-                    <Button variant="primary" onClick={this.handleAdd}>
-                        Save
-                    </Button>
-                    <Button variant="danger" onClick={this.toggleAddModal}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>}
+                    <Modal.Footer>
+                        <Button
+                            variant="primary"
+                            disabled={!title}
+                            onClick={this.handleAdd}>
+                            Add
+                        </Button>
+
+                        <Button
+                            variant="danger"
+                            onClick={onClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+
+                </Modal>
+
+
+                <Button
+                    variant="outline-secondary"
+                    type="button" value="Add"
+                    onClick={this.toggleAddModal} >Add</Button>
             </>
-            // <InputGroup className={c.place}>
-            //     <FormControl type="text"
-            //         placeholder={this.props.placeholder}
-            //         value={inputValue}
-            //         onChange={(event) => this.handleChange(event)}
-            //         aria-describedby="basic-addon1"
-            //         onKeyDown={(event) => this.handleKeyDown(event)}
-            //         disabled={disabled}
-            //     />
-
-            //     <InputGroup.Prepend>
-            //         <Button
-            //             variant="outline-secondary"
-            //             type="button" value="Add"
-            //             onClick={this.handleAdd}
-
-            //         >Add
-            //         </Button>
-            //     </InputGroup.Prepend>
-
-            // </InputGroup>
 
         )
 
@@ -134,8 +140,9 @@ class AddTask extends Component {
 
 
 AddTask.propTypes = {
-    disabled:PropTypes.number,
-    onAdd:PropTypes.func,
+    disabled: PropTypes.number,
+    onAdd: PropTypes.func,
+    onClose:PropTypes.func,
 };
 
 export default AddTask;
