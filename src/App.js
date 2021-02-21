@@ -1,32 +1,30 @@
 import './App.css';
 import ToDo from './ToDo.js';
-import './promise.js';
-// import BootstrapDemo from './BootstrapDemo.js';
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import { Col, Row, Container } from 'react-bootstrap';
+import {Route, Switch, Redirect, Link} from 'react-router-dom';
+import About from './About.js';
+import Contact from './Contact.js';
+import Single from './Single.js';
+import notFound from './notFound.js';
+import NavMenu from './NavMenu.js';
+
+function App (){
 
 
-
-
-function App() {
   return (
-    <div>
+    <>
       <div className="App">
-        {/* <Container>
-          <Row>
-            <Col> */}
-              <ToDo placeholder='Add new task for today' day='today' />
-            {/* </Col>
-
-            <Col> */}
-              {/* <ToDo placeholder='Add new task for tomorrow' day='tomorrow' /> */}
-            {/* </Col>
-          </Row>
-          <BootstrapDemo /> 
-        </Container> */}
-
+      <NavMenu/>
+        <Switch> 
+        
+        <Route path = '/' exact component = {ToDo}/>
+        <Route path = '/about' exact component = {About}/>
+        <Route path = '/contact' exact component = {Contact}/>
+        <Route path = '/singletask/:id' exact component = {Single}/>
+        <Route path = '/404' exact component = {notFound}/>
+        <Redirect to = '/404'/>
+        </Switch>
       </div>
-    </div>
+    </>
   );
 }
 

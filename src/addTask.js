@@ -22,22 +22,17 @@ class AddTask extends Component {
 
 
     handleAdd = () => {
-
-
-
         const { title, description,date } = this.state;
-
         if (!title) {
             return
         }
-
+        
         const task = {
             title,
             description,
-            // date:date.toISOString().slice(0,10)
             date:formatDate(date.toISOString())
         }
-        this.props.onAdd(task)
+      this.props.onAdd(task)
     }
 
 
@@ -72,17 +67,17 @@ class AddTask extends Component {
 
     render() {
 
-        const { title, description, toggle, date } = this.state
-        const { disabled, onClose } = this.props
-        const Example = () => {
-            const [startDate, setStartDate] = useState(new Date());
-        };
+        const { title, date, handleAdd} = this.state
+        const { disabled, onClose} = this.props
+        // const Example = () => {
+        //     const [startDate, setStartDate] = useState(new Date());
+        // };
 
         return (
             <>
                 <Modal
                     show={true}
-                    onHide={() => console.log('shf')}
+                    onHide={onClose}
                     centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Add Task</Modal.Title>
@@ -124,10 +119,10 @@ class AddTask extends Component {
                 </Modal>
 
 
-                <Button
+                {/* <Button
                     variant="outline-secondary"
                     type="button" value="Add"
-                    onClick={this.toggleAddModal} >Add</Button>
+                    onClick={this.toggleAddModal} >Add</Button> */}
             </>
 
         )

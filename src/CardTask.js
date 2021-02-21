@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './Card.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {formatDate} from "./utils.js";
+import { formatDate } from "./utils.js";
+import { Link } from 'react-router-dom';
 
 
 
@@ -24,13 +25,15 @@ class CardTask extends Component {
         onCheck(data._id)
     }
 
-    render(props) {
+    render() {
 
-        const task = this.props.data;
+
         const { checked } = this.state;
         const { disabled } = this.props;
+        const task = this.props.data;
+        // console.log(data)
 
-       
+
 
         return (
             <Card className={checked ? 'task' : ''}>
@@ -43,7 +46,10 @@ class CardTask extends Component {
                     </input>
 
                     <Card.Title>
-                        {task.title}
+                        <Link to={ `/singletask/${task._id}`}>
+                            {task.title}
+                        </Link>
+
                     </Card.Title>
 
                     <Card.Text>
@@ -66,7 +72,7 @@ class CardTask extends Component {
 
                     <Button
                         variant="primary"
-                        onClick= {() => this.props.onEdit(task)}
+                        onClick={() => this.props.onEdit(task)}
                         disabled={disabled}
                     >Edit</Button>
                 </Card.Body>

@@ -16,7 +16,7 @@ class ToDo extends PureComponent {
         arr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         selectedTasks: new Set(),
         toggle: false,
-        openNewTaskModal: false
+        openNewTaskModal: false,
     }
 
     componentDidMount() {
@@ -24,9 +24,9 @@ class ToDo extends PureComponent {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
         })
-            .then((res) => res.json())
+            .then(res => res.json())
             .then((response) => {
                 if (response.error) {
                     throw response.error
@@ -63,7 +63,7 @@ class ToDo extends PureComponent {
     handleAdd = (data) => {
 
         console.log(data)
-        const body = JSON.stringify(data)
+        const body =JSON.stringify(data)
 
         fetch('http://localhost:3001/task', {
             method: 'POST',
@@ -81,7 +81,7 @@ class ToDo extends PureComponent {
                 const tasks = [response, ...this.state.tasks]
 
                 this.setState({
-                    tasks: tasks,
+                    tasks,
                     openNewTaskModal:false
                 })
             })
@@ -208,7 +208,7 @@ class ToDo extends PureComponent {
 
     render() {
 
-
+        const { handleAdd} = this.props
         const { toggle, selectedTasks, editTask, openNewTaskModal } = this.state;
         const tasksArray = this.state.tasks.map((task, i) => {
 
@@ -235,7 +235,7 @@ class ToDo extends PureComponent {
                                 onClick={this.toggleopenNewTaskModal}
                                 disabled={!!selectedTasks.size}>
                                 Add New Task
-                    </Button>
+                            </Button>
 
                         </Col>
 
