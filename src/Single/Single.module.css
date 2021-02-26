@@ -1,0 +1,8 @@
+.card{
+    border: 1px solid rgba(49,68,243,0.548);
+    border-radius: 2.25rem;
+}
+
+.cardbody{
+    padding: 1.25rem;
+}

@@ -31,13 +31,9 @@ class CardTask extends Component {
         const { checked } = this.state;
         const { disabled } = this.props;
         const task = this.props.data;
-        // console.log(data)
-
-
 
         return (
             <Card className={checked ? 'task' : ''}>
-                <Card.Img variant="top" src="holder.js/100px180" />
                 <Card.Body>
                     <input
                         type='checkbox'
@@ -46,7 +42,7 @@ class CardTask extends Component {
                     </input>
 
                     <Card.Title>
-                        <Link to={ `/singletask/${task._id}`}>
+                        <Link to={`/singletask/${task._id}`}>
                             {task.title}
                         </Link>
 

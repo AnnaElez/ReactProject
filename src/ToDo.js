@@ -7,6 +7,7 @@ import AddTask from './addTask.js';
 import Confirm from './RemoveModal.js';
 import PropTypes from 'prop-types';
 import EditTaskModal from './EditModal.js';
+import Spiner from './Loader/spiner';
 
 class ToDo extends PureComponent {
 
@@ -63,7 +64,7 @@ class ToDo extends PureComponent {
     handleAdd = (data) => {
 
         console.log(data)
-        const body =JSON.stringify(data)
+        const body = JSON.stringify(data)
 
         fetch('http://localhost:3001/task', {
             method: 'POST',
@@ -82,7 +83,7 @@ class ToDo extends PureComponent {
 
                 this.setState({
                     tasks,
-                    openNewTaskModal:false
+                    openNewTaskModal: false
                 })
             })
             .catch((error) => {
@@ -207,9 +208,7 @@ class ToDo extends PureComponent {
     }
 
     render() {
-
-        const { handleAdd} = this.props
-        const { toggle, selectedTasks, editTask, openNewTaskModal } = this.state;
+        const { tasks, toggle, selectedTasks, editTask, openNewTaskModal } = this.state;
         const tasksArray = this.state.tasks.map((task, i) => {
 
             return (
@@ -241,7 +240,9 @@ class ToDo extends PureComponent {
 
                     </Row>
 
-                    <Row>{tasksArray}</Row>
+                    <Row>
+                      {tasksArray}
+                    </Row>
 
                     <Button variant="outline-danger"
                         onClick={this.toggleConfirm}
@@ -268,8 +269,8 @@ class ToDo extends PureComponent {
                     <AddTask
                         onAdd={this.handleAdd}
                         disabled={selectedTasks.size}
-                        placeholder={this.props.placeholder} 
-                        onClose = {this.toggleopenNewTaskModal}/>
+                        placeholder={this.props.placeholder}
+                        onClose={this.toggleopenNewTaskModal} />
                 }
 
 
