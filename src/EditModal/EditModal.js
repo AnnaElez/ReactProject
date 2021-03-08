@@ -1,9 +1,9 @@
-import React, { Component,useState } from 'react';
+import React, { Component, createRef} from 'react';
 import { Button, Modal, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './EditTask.css';
 import DatePicker from "react-datepicker";
-import {formatDate} from "./utils.js";
+import {formatDate} from "../utils.js";
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -19,6 +19,12 @@ export default class EditTaskModal extends Component {
             date: date? new Date(date): new Date()
             
         }
+
+        this.titleRef = createRef(null)
+    }
+
+    componentDidMount(){
+        this.titleRef.current.focus()
     }
 
     handleChange = (event) => {
@@ -70,8 +76,7 @@ export default class EditTaskModal extends Component {
                             placeholder={this.props.placeholder}
                             onChange={this.handleChange}
                             aria-describedby="basic-addon1"
-                            // onKeyDown={(event) => this.handleKeyDown(event)}
-                            // disabled={disabled}
+                            ref = {this.titleRef}
                         />
                         <textarea
                             name = 'description'

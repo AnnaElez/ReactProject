@@ -3,9 +3,9 @@ import Spiner from '../Loader/spiner';
 import { Card, Button } from 'react-bootstrap';
 import { formatDate } from "../utils.js";
 import c from './Single.module.css'
-import EditTaskModal from '../EditModal.js'
+import EditTaskModal from '../EditModal/EditModal.js'
 
-export default class extends PureComponent {
+export default class Single extends PureComponent {
 
   state = {
     task: null,
@@ -71,29 +71,28 @@ export default class extends PureComponent {
     const taskId = this.state.task._id
 
     fetch(`http://localhost:3001/task/${taskId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
-        .then((res) => res.json())
-        .then((response) => {
-            if (response.error) {
-                throw response.error
-            }
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.error) {
+          throw response.error
+        }
 
-            this.setState({
-                task:response,
-                openEditModal: false,
-            })
+        this.setState({
+          task: response,
+          openEditModal: false,
         })
-        .catch((error) => {
-            console.log(error)
-        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
-}
-
+  }
 
 
 

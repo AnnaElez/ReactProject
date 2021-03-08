@@ -1,19 +1,20 @@
 import React, { PureComponent } from 'react';
-import c from './Demo.module.css';
+import c from './ToDo.module.css';
 import { Button, Col, Row, Container } from 'react-bootstrap';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Task from './CardTask.js';
-import AddTask from './addTask.js';
-import Confirm from './RemoveModal.js';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Task from '../Card/CardTask.js';
+import AddTask from '../addTask.js';
+import Confirm from '../RemoveModal.js';
 import PropTypes from 'prop-types';
-import EditTaskModal from './EditModal.js';
-import Spiner from './Loader/spiner';
+import EditTaskModal from '../EditModal/EditModal.js';
+import { connect } from 'react-redux';
+import { getTasks } from '../actions'
+
 
 class ToDo extends PureComponent {
 
     state = {
         editTask: null,
-        tasks: [],
         arr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         selectedTasks: new Set(),
         toggle: false,
@@ -21,25 +22,7 @@ class ToDo extends PureComponent {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/task', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(res => res.json())
-            .then((response) => {
-                if (response.error) {
-                    throw response.error
-                }
-
-                this.setState({
-                    tasks: response
-                })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        this.props.getTasks()
     }
 
 
@@ -79,7 +62,7 @@ class ToDo extends PureComponent {
                     throw response.error
                 }
 
-                const tasks = [response, ...this.state.tasks]
+                const tasks = [response, ...this.props.tasks]
 
                 this.setState({
                     tasks,
@@ -107,7 +90,7 @@ class ToDo extends PureComponent {
                     throw response.error
                 }
 
-                const newTasks = this.state.tasks.filter(task => task._id !== taskId);
+                const newTasks = this.props.tasks.filter(task => task._id !== taskId);
                 this.setState({
                     tasks: newTasks,
                 })
@@ -137,7 +120,7 @@ class ToDo extends PureComponent {
                     throw response.error
                 }
 
-                let tasks = [...this.state.tasks]
+                let tasks = [...this.props.tasks]
 
                 this.state.selectedTasks.forEach((id) => {
 
@@ -185,7 +168,7 @@ class ToDo extends PureComponent {
                     throw response.error
                 }
 
-                const tasks = [...this.state.tasks]
+                const tasks = [...this.props.tasks]
                 const foundTaskIndex = tasks.findIndex((task) => task._id === editedTask._id)
                 tasks[foundTaskIndex] = response
 
@@ -208,8 +191,8 @@ class ToDo extends PureComponent {
     }
 
     render() {
-        const { tasks, toggle, selectedTasks, editTask, openNewTaskModal } = this.state;
-        const tasksArray = this.state.tasks.map((task, i) => {
+        const { toggle, selectedTasks, editTask, openNewTaskModal } = this.state;
+        const tasksArray = this.props.tasks.map((task, i) => {
 
             return (
                 <Col key={i} xs={12} sm={10} md={3} lg={5} xl={5} className='mb-3'>
@@ -241,7 +224,7 @@ class ToDo extends PureComponent {
                     </Row>
 
                     <Row>
-                      {tasksArray}
+                        {tasksArray}
                     </Row>
 
                     <Button variant="outline-danger"
@@ -278,13 +261,30 @@ class ToDo extends PureComponent {
 
         )
     }
+}
 
+const mapStateToProps = (state) => {
+    return {
+        tasks: state.tasks
+    }
 
 }
 
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         getTask: () => {
+//             dispatch({
+//             })
+//         }
+//     }
+// }
 
+const mapDispatchToProps = {
+    getTasks: getTasks
 
-export default ToDo;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
 
 ToDo.propTypes = {
     data: PropTypes.object,

@@ -1,11 +1,11 @@
 import './App.css';
-import ToDo from '../ToDo.js';
+import ToDo from '../ToDo/ToDo.js';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import About from '../About.js';
 import Contact from '../Contact.js';
 import Single from '../Single/Single.js';
 import notFound from '../notFound.js';
-import NavMenu from '../NavMenu.js';
+import NavMenu from '../NavMenu/NavMenu.js';
 
 function App (){
   

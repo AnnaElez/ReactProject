@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Block from './Block.js'
+import Block from './Block/Block.js'
 import { Container, Row, Col } from 'react-bootstrap'
 
-class BootstrapDemo extends Component {
+class Bootstrap extends Component {
     render() {
 
         const blocks = [];

@@ -1,38 +1,43 @@
-import React, { Component, useState } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import c from './Demo.module.css';
+import c from './ToDo/ToDo.module.css';
 import { Button, Modal, FormControl } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {formatDate} from "./utils.js";
+import { formatDate } from "./utils.js";
 
 
+export default class AddTask extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            toggle: false,
+            title: '',
+            description: '',
+            date: new Date()
+        }
 
-class AddTask extends Component {
-
-    state = {
-        toggle: false,
-        title: '',
-        description: '',
-        date:new Date()
+        this.titleRef = createRef(null)
     }
 
-
+    componentDidMount(){
+        this.titleRef.current.focus()
+    }
 
     handleAdd = () => {
-        const { title, description,date } = this.state;
+        const { title, description, date } = this.state;
         if (!title) {
             return
         }
-        
+
         const task = {
             title,
             description,
-            date:formatDate(date.toISOString())
+            date: formatDate(date.toISOString())
         }
-      this.props.onAdd(task)
+        this.props.onAdd(task)
     }
 
 
@@ -58,7 +63,7 @@ class AddTask extends Component {
 
     }
 
-    handleDateChange=(date)=>{
+    handleDateChange = (date) => {
         this.setState({
             date
         })
@@ -67,11 +72,8 @@ class AddTask extends Component {
 
     render() {
 
-        const { title, date, handleAdd} = this.state
-        const { disabled, onClose} = this.props
-        // const Example = () => {
-        //     const [startDate, setStartDate] = useState(new Date());
-        // };
+        const { title, date} = this.state
+        const { disabled, onClose } = this.props
 
         return (
             <>
@@ -90,6 +92,7 @@ class AddTask extends Component {
                             aria-describedby="basic-addon1"
                             onKeyDown={(event) => this.handleKeyDown(event)}
                             disabled={disabled}
+                            ref = {this.titleRef}
                         />
                         <textarea
                             className={c.description}
@@ -98,7 +101,7 @@ class AddTask extends Component {
 
                         <DatePicker
                             selected={date}
-                            onChange={(date)=>this.handleDateChange(date)} />
+                            onChange={(date) => this.handleDateChange(date)} />
                     </Modal.Body>
 
                     <Modal.Footer>
@@ -117,12 +120,6 @@ class AddTask extends Component {
                     </Modal.Footer>
 
                 </Modal>
-
-
-                {/* <Button
-                    variant="outline-secondary"
-                    type="button" value="Add"
-                    onClick={this.toggleAddModal} >Add</Button> */}
             </>
 
         )
@@ -137,7 +134,5 @@ class AddTask extends Component {
 AddTask.propTypes = {
     disabled: PropTypes.number,
     onAdd: PropTypes.func,
-    onClose:PropTypes.func,
+    onClose: PropTypes.func,
 };
-
-export default AddTask;

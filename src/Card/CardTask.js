@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './Card.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { formatDate } from "./utils.js";
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { formatDate } from "../utils.js";
 import { Link } from 'react-router-dom';
 
 
@@ -78,4 +78,4 @@ class CardTask extends Component {
     }
 }
 
-export default CardTask
+export default CardTask;
