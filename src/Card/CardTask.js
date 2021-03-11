@@ -4,8 +4,8 @@ import './Card.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { formatDate } from "../utils.js";
 import { Link } from 'react-router-dom';
-
-
+import { connect } from 'react-redux';
+import { deleteTask } from '../actions'
 
 class CardTask extends Component {
 
@@ -62,7 +62,7 @@ class CardTask extends Component {
 
                     <Button
                         variant="danger"
-                        onClick={() => this.props.onRemove(task._id)}
+                        onClick={() => this.props.deleteTask(task._id)}
                         disabled={disabled}
                     >Delete</Button>
 
@@ -78,4 +78,10 @@ class CardTask extends Component {
     }
 }
 
-export default CardTask;
+const mapDispatchToProps = {
+    deleteTask
+}
+
+
+
+export default connect(null, mapDispatchToProps)(CardTask);

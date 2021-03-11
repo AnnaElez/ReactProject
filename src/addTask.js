@@ -6,9 +6,10 @@ import { Button, Modal, FormControl } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate } from "./utils.js";
+import { connect } from 'react-redux';
+import { addTask } from './actions'
 
-
-export default class AddTask extends Component {
+class AddTask extends Component {
 
     constructor(props) {
         super(props)
@@ -22,7 +23,7 @@ export default class AddTask extends Component {
         this.titleRef = createRef(null)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.titleRef.current.focus()
     }
 
@@ -37,7 +38,9 @@ export default class AddTask extends Component {
             description,
             date: formatDate(date.toISOString())
         }
-        this.props.onAdd(task)
+
+        this.props.addTask(task)
+        // this.props.onAdd(task)
     }
 
 
@@ -72,7 +75,7 @@ export default class AddTask extends Component {
 
     render() {
 
-        const { title, date} = this.state
+        const { title, date } = this.state
         const { disabled, onClose } = this.props
 
         return (
@@ -92,7 +95,7 @@ export default class AddTask extends Component {
                             aria-describedby="basic-addon1"
                             onKeyDown={(event) => this.handleKeyDown(event)}
                             disabled={disabled}
-                            ref = {this.titleRef}
+                            ref={this.titleRef}
                         />
                         <textarea
                             className={c.description}
@@ -130,9 +133,15 @@ export default class AddTask extends Component {
 }
 
 
-
 AddTask.propTypes = {
     disabled: PropTypes.number,
     onAdd: PropTypes.func,
     onClose: PropTypes.func,
 };
+
+const mapDispatchToProps = {
+    addTask
+}
+
+
+export default connect(null, mapDispatchToProps)(AddTask);

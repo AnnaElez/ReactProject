@@ -25,6 +25,11 @@ class ToDo extends PureComponent {
         this.props.getTasks()
     }
 
+    componentDidUpdate(prevProps) {
+        if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
+            this.toggleopenNewTaskModal()
+        }
+    }
 
 
     handleCheck = (taskId) => {
@@ -42,39 +47,7 @@ class ToDo extends PureComponent {
             selectedTasks //ete key=value karelia mi angam ira anun@ grel
         })
     }
-
-
-    handleAdd = (data) => {
-
-        console.log(data)
-        const body = JSON.stringify(data)
-
-        fetch('http://localhost:3001/task', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body
-        })
-            .then((res) => res.json())
-            .then((response) => {
-                if (response.error) {
-                    throw response.error
-                }
-
-                const tasks = [response, ...this.props.tasks]
-
-                this.setState({
-                    tasks,
-                    openNewTaskModal: false
-                })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-
-    }
-
+    
 
     handleDelete = (taskId) => {
 
@@ -250,7 +223,6 @@ class ToDo extends PureComponent {
                 }
                 { openNewTaskModal &&
                     <AddTask
-                        onAdd={this.handleAdd}
                         disabled={selectedTasks.size}
                         placeholder={this.props.placeholder}
                         onClose={this.toggleopenNewTaskModal} />
@@ -265,19 +237,11 @@ class ToDo extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        addTaskSuccess: state.addTaskSuccess,
     }
 
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         getTask: () => {
-//             dispatch({
-//             })
-//         }
-//     }
-// }
 
 const mapDispatchToProps = {
     getTasks: getTasks

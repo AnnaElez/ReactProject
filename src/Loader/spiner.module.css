@@ -1,5 +1,6 @@
 
 .container{
+  opacity: 0.8;
     background: white;
     height: 100vh;
     position: absolute;
